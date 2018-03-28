@@ -47,4 +47,4 @@ export RISCV
 eval ./$BUILD_APP
 
 # Archive and compress
-tar cfvz $BUILDS_DIR/$BUILD_APP_SHORT.tar.gz -C $RISCV . 
+tar cfvz - -C $RISCV . | split --numeric-suffixes --bytes=20MB - $BUILDS_DIR/$BUILD_APP_SHORT.tar.gz.
