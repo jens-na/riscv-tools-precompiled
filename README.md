@@ -29,6 +29,43 @@ d5fd5725480b5600baffb9a465c96f2ced6479177221059b7c2ce4d4bafe516e  build-rv32ima.
 00edfa793a8cae813b864ccb737a2c32740112bc7ab30adb789ff097f96e986a  build-rv32ima.tar.gz.14
 ````
 
+**Attention!**
+The RISCV toolchain is a precompiled version, but GCC is linked against the following dynamic libraries which must be available:
+
+```
+$ riscv32-unknown-elf-objdump -p ./libexec/gcc/riscv32-unknown-elf/7.2.0/cc1  
+[...]
+Dynamic Section:
+  NEEDED               libisl.so.15    --> see below
+  NEEDED               libmpc.so.3
+  NEEDED               libmpfr.so.6    --> see below
+  NEEDED               libgmp.so.10
+  NEEDED               libdl.so.2
+  NEEDED               libz.so.1
+  NEEDED               libm.so.6
+  NEEDED               libc.so.6
+[...]
+```
+-- `libisl.so.15`
+```
+wget http://isl.gforge.inria.fr/isl-0.15.tar.gz
+tar -xvf isl-0.15.tar.gz
+cd isl-0.15
+./configure
+make
+sudo make install
+```
+
+-- `libmpfr.so.6`
+```
+wget http://www.mpfr.org/mpfr-current/mpfr-4.0.1.tar.gz
+tar -xvf mpfr-4.0.1.tar.gz
+cd mpfr-4.0.1
+./configure
+make
+sudo make install
+```
+
 ## Usage
 Download and concatenate the files first:
 ```
@@ -50,5 +87,3 @@ $ ./build.sh [build-rv32ima.sh | build.sh]
 
 ## License and Copyright
 Licensed under the MIT License.
-
-
